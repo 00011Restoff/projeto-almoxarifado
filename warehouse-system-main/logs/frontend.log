@@ -1,0 +1,67 @@
+
+> almoxarifado-frontend@0.0.0 dev
+> vite
+
+
+  VITE v7.1.12  ready in 477 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+1:12:35 PM [vite] (client) hmr update /src/pages/Produtos.jsx, /src/index.css
+1:12:42 PM [vite] (client) hmr update /src/pages/Produtos.jsx, /src/index.css
+1:12:55 PM [vite] (client) hmr update /src/pages/Produtos.jsx, /src/index.css
+1:13:07 PM [vite] (client) hmr update /src/index.css, /src/components/Navbar.jsx
+1:14:12 PM [vite] (client) hmr update /src/pages/Emprestimos.jsx, /src/index.css
+1:14:21 PM [vite] (client) hmr update /src/pages/Emprestimos.jsx, /src/index.css
+1:14:52 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+1:15:07 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+1:23:37 PM [vite] (client) hmr update /src/index.css
+1:23:39 PM [vite] Internal server error: [postcss] /workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/src/index.css:1:1: The `text-azulClaro` class does not exist. If `text-azulClaro` is a custom class, make sure it is defined within a `@layer` directive.
+  Plugin: vite:css
+  File: /workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/src/index.css:1:0
+  1  |  @tailwind base;
+     |  ^
+  2  |  @tailwind components;
+  3  |  @tailwind utilities;
+      at Input.error (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/postcss/lib/input.js:135:16)
+      at AtRule.error (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/postcss/lib/node.js:146:32)
+      at processApply (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/postcss/lib/lazy-result.js:293:11)
+      at async runPostCSS (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:32052:19)
+      at async compilePostCSS (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:32036:6)
+      at async compileCSS (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:31966:26)
+      at async TransformPluginContext.handler (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:31499:54)
+      at async EnvironmentPluginContainer.transform (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:30905:14)
+      at async loadAndTransform (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:26043:26)
+1:23:39 PM [vite] Internal server error: [postcss] /workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/src/index.css:1:1: The `text-azulClaro` class does not exist. If `text-azulClaro` is a custom class, make sure it is defined within a `@layer` directive.
+  Plugin: vite:css
+  File: /workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/src/index.css:1:0
+  1  |  @tailwind base;
+     |  ^
+  2  |  @tailwind components;
+  3  |  @tailwind utilities;
+      at Input.error (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/postcss/lib/input.js:135:16)
+      at AtRule.error (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/postcss/lib/node.js:146:32)
+      at processApply (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+      at /workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:538:9
+      at /workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/tailwindcss/lib/processTailwindFeatures.js:57:50
+      at async plugins (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/tailwindcss/lib/plugin.js:38:17)
+      at async LazyResult.runAsync (/workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/postcss/lib/lazy-result.js:293:11)
+      at async runPostCSS (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:32052:19)
+      at async compilePostCSS (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:32036:6)
+      at async compileCSS (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:31966:26)
+      at async TransformPluginContext.handler (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:31499:54)
+      at async EnvironmentPluginContainer.transform (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:30905:14)
+      at async loadAndTransform (file:///workspaces/projeto-almoxarifado/warehouse-system-main/almoxarifado-frontend/node_modules/vite/dist/node/chunks/config.js:26043:26)
+1:23:39 PM [vite] (client) hmr update /src/index.css
+1:23:40 PM [vite] (client) hmr update /src/pages/Login.jsx, /src/index.css
+1:23:41 PM [vite] (client) hmr update /src/pages/Produtos.jsx, /src/index.css
+1:23:42 PM [vite] (client) hmr update /src/index.css, /src/components/Navbar.jsx
+1:23:44 PM [vite] (client) hmr update /src/pages/Saidas.jsx, /src/index.css
+1:23:47 PM [vite] (client) hmr update /src/index.css, /src/pages/Relatorios.jsx
+1:23:47 PM [vite] (client) hmr update /src/pages/Emprestimos.jsx, /src/index.css
+1:23:49 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+1:24:54 PM [vite] (client) hmr update /src/pages/Produtos.jsx, /src/index.css

@@ -1,9 +1,13 @@
 package com.almoxarifado.almoxarifado_backend.service;
 
 import com.almoxarifado.almoxarifado_backend.dto.ProductImportResult;
-import com.almoxarifado.almoxarifado_backend.model.Product;
-import com.almoxarifado.almoxarifado_backend.repository.ProductRepository;
-import org.apache.poi.ss.usermodel.*;
+import com.almoxarifado.almoxarifado_backend.model.Produto;
+import com.almoxarifado.almoxarifado_backend.repository.ProdutoRepository;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,10 +19,10 @@ import java.util.List;
 @Service
 public class ProductImportService {
 
-    private final ProductRepository productRepository;
+    private final ProdutoRepository produtoRepository;
 
-    public ProductImportService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductImportService(ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
     }
 
     public ProductImportResult importProducts(MultipartFile file) {
@@ -35,18 +39,25 @@ public class ProductImportService {
                 if (row == null) continue;
 
                 try {
-                    Product product = new Product();
-                    product.setSku(getCellValue(row.getCell(0)));
-                    product.setName(getCellValue(row.getCell(1)));
-                    product.setCategory(getCellValue(row.getCell(2)));
-                    product.setQuantity(Integer.parseInt(getCellValue(row.getCell(3))));
-                    product.setUnit(getCellValue(row.getCell(4)));
-                    product.setMinimumStock(Integer.parseInt(getCellValue(row.getCell(5))));
-                    product.setLocation(getCellValue(row.getCell(6)));
-                    product.setOrigin(getCellValue(row.getCell(7)));
-                    product.setObservation(getCellValue(row.getCell(8)));
+                    Produto produto = new Produto();
+                    // Mapeamento simples de colunas do Excel para campos do modelo `Produto`.
+                    produto.setNome(getCellValue(row.getCell(1)));
+                    try {
+                        produto.setQuantidade(Integer.parseInt(getCellValue(row.getCell(3))));
+                    } catch (NumberFormatException ex) {
+                        produto.setQuantidade(0);
+                    }
+                    produto.setCategoria(getCellValue(row.getCell(2)));
+                    produto.setPrateleira(getCellValue(row.getCell(4)));
+                    try {
+                        produto.setEstoqueMinimo(Integer.parseInt(getCellValue(row.getCell(5))));
+                    } catch (NumberFormatException ex) {
+                        produto.setEstoqueMinimo(0);
+                    }
+                    produto.setOrigem(getCellValue(row.getCell(7)));
+                    produto.setDescricao(getCellValue(row.getCell(8)));
 
-                    productRepository.save(product);
+                    produtoRepository.save(produto);
                     importedCount++;
                 } catch (Exception e) {
                     errors.add("Linha " + (i + 1) + ": " + e.getMessage());
