@@ -278,139 +278,122 @@ export default function Produtos() {
         </button>
       )}
 
-      {/* Modal de cadastro */}
-      {modalOpen && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-          <div
-            onAnimationEnd={handleAnimationEnd}
-            className={`relative bg-white text-preto rounded-xl shadow-2xl p-8 w-full max-w-lg transform transition-all ${closing ? 'animate-fadeOutDown' : 'animate-fadeInUp'
-              }`}
-          >
-            {/* Botão de fechar */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-vermelho hover:text-vermelhoEscuro font-bold text-xl"
-            >
-              ×
-            </button>
+   {/* Botão flutuante de adicionar produto (somente ADMIN) */}
+{isAdmin() && (
+  <button
+    onClick={openModal}
+    className="fixed bottom-3 right-3 bg-vermelho hover:bg-vermelhoEscuro text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition z-50"
+    title="Cadastrar Produto"
+  >
+    <PlusIcon className="h-8 w-8" />
+  </button>
+)}
 
-            <h2 className="text-2xl font-bold text-vermelho mb-6 text-center">
-              Registrar Produto
-            </h2>
+{/* Modal de cadastro */}
+{modalOpen && (
+  <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+    <div
+      onAnimationEnd={handleAnimationEnd}
+      className={`relative bg-white text-preto rounded-xl shadow-2xl p-8 w-full max-w-lg transform transition-all ${
+        closing ? 'animate-fadeOutDown' : 'animate-fadeInUp'
+      }`}
+    >
+      {/* Botão de fechar */}
+      <button
+        onClick={closeModal}
+        className="absolute top-4 right-4 text-vermelho hover:text-vermelhoEscuro font-bold text-xl"
+      >
+        ×
+      </button>
 
-            {/* Formulário */}
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <div>
-                <label className="block text-sm font-semibold mb-1">Nome</label>
-                <input
-                  type="text"
-                  name="nome"
-                  value={form.nome}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-                  placeholder="Digite o nome do produto"
-                  required
-                />
-              </div>
+      <h2 className="text-2xl font-bold text-vermelho mb-6 text-center">
+        Registrar Produto
+      </h2>
 
-              <div>
-                <label className="block text-sm font-semibold mb-1">Descrição</label>
-                <textarea
-                  name="descricao"
-                  value={form.descricao}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-                  placeholder="Digite a descrição do produto"
-                  rows={3}
-                />
-              </div>
+      {/* Formulário */}
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="nome"
+          value={form.nome}
+          onChange={handleChange}
+          placeholder="Nome do produto"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+          required
+        />
+        <textarea
+          name="descricao"
+          value={form.descricao}
+          onChange={handleChange}
+          placeholder="Descrição do produto"
+          rows={3}
+          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+        />
+        <input
+          type="text"
+          name="categoria"
+          value={form.categoria}
+          onChange={handleChange}
+          placeholder="Categoria"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+          required
+        />
+        <input
+          type="text"
+          name="prateleira"
+          value={form.prateleira}
+          onChange={handleChange}
+          placeholder="Prateleira"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+        />
+        <input
+          type="text"
+          name="origem"
+          value={form.origem}
+          onChange={handleChange}
+          placeholder="Origem"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+        />
 
-              <div>
-                <label className="block text-sm font-semibold mb-1">Categoria</label>
-                <input
-                  type="text"
-                  name="categoria"
-                  value={form.categoria}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-                  placeholder="Digite a categoria"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-1">Prateleira</label>
-                <input
-                  type="text"
-                  name="prateleira"
-                  value={form.prateleira}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-                  placeholder="Digite a prateleira"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-1">Origem</label>
-                <input
-                  type="text"
-                  name="origem"
-                  value={form.origem}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-                  placeholder="Digite a origem"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold mb-1">Quantidade</label>
-                  <input
-                    type="number"
-                    name="quantidade"
-                    value={form.quantidade}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-                    placeholder="Digite a quantidade"
-                    min="0"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold mb-1">Estoque mínimo</label>
-                  <input
-                    type="number"
-                    name="estoqueMinimo"
-                    value={form.estoqueMinimo}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-                    placeholder="Quantidade mínima em estoque"
-                    min="0"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 pt-2">
-                <button
-                  type="submit"
-                  className="flex-1 bg-vermelho hover:bg-vermelhoEscuro text-white font-semibold py-2 rounded-md transition shadow-md"
-                >
-                  Salvar Produto
-                </button>
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="flex-1 bg-zinc-200 hover:bg-zinc-300 text-preto font-semibold py-2 rounded-md transition"
-                >
-                  Cancelar
-                </button>
-              </div>
-            </form>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <input
+            type="number"
+            name="quantidade"
+            value={form.quantidade}
+            onChange={handleChange}
+            placeholder="Quantidade"
+            min="0"
+            required
+            className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+          />
+          <input
+            type="number"
+            name="estoqueMinimo"
+            value={form.estoqueMinimo}
+            onChange={handleChange}
+            placeholder="Estoque mínimo"
+            min="0"
+            required
+            className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+          />
         </div>
-      )}
-      <Footer />
+
+        <div className="flex items-center gap-3 pt-2">
+          <button
+            type="submit"
+            className="flex-1 bg-vermelho hover:bg-vermelhoEscuro text-white font-semibold py-2 rounded-md transition shadow-md"
+          >
+            Salvar Produto
+          </button>
+          <button
+            type="button"
+            onClick={closeModal}
+            className="flex-1 bg-zinc-200 hover:bg-zinc-300 text-preto font-semibold py-2 rounded-md transition"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
     </div>
-  );
-}
+  </div>
+)}
