@@ -1,16 +1,13 @@
 import {
   FunnelIcon,
-  HeartIcon,
-  ChatBubbleBottomCenterTextIcon,
-  ShieldCheckIcon,
   PlusIcon,
-  TrashIcon, // ícone de lixeira
+  TrashIcon,
+  ArrowDownOnSquareIcon,
 } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
-import TabelaHeader from '../components/TabelaHeader';
-import { isAdmin } from '../utils/authUtils';
 import Footer from '../components/Footer';
+import { isAdmin } from '../utils/authUtils';
 
 export default function Produtos() {
   const [produtos, setProdutos] = useState([]);
@@ -20,7 +17,7 @@ export default function Produtos() {
   const [tamanhoPagina] = useState(10);
   const [totalPaginas, setTotalPaginas] = useState(0);
 
-  // Modal
+  // Modal de cadastro
   const [modalOpen, setModalOpen] = useState(false);
   const [closing, setClosing] = useState(false);
 
@@ -50,9 +47,7 @@ export default function Produtos() {
     params.append('size', tamanhoPagina);
 
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/produtos?${params.toString()}`
-      );
+      const response = await fetch(`http://localhost:8080/api/v1/produtos?${params.toString()}`);
       const data = await response.json();
       setProdutos(data.content || []);
       setTotalPaginas(data.totalPages || 0);
@@ -76,11 +71,7 @@ export default function Produtos() {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },
         body: JSON.stringify({
-          nome: form.nome,
-          descricao: form.descricao,
-          categoria: form.categoria,
-          prateleira: form.prateleira,
-          origem: form.origem,
+          ...form,
           quantidade: Number(form.quantidade),
           estoqueMinimo: Number(form.estoqueMinimo),
         }),
@@ -146,6 +137,7 @@ export default function Produtos() {
       setClosing(false);
     }
   }
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-preto via-vermelhoEscuro/40 to-rosaClaro/20 text-white flex flex-col">
       <Navbar />
@@ -267,133 +259,134 @@ export default function Produtos() {
         </div>
       </div>
 
-      {/* Botão flutuante de adicionar produto (somente ADMIN) */}
+      {/* Botões flutuantes ADMIN: Cadastrar + Importar CSV */}
       {isAdmin() && (
-        <button
-          onClick={openModal}
-          className="fixed bottom-3 right-3 bg-vermelho hover:bg-vermelhoEscuro text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition z-50"
-          title="Cadastrar Produto"
-        >
-          <PlusIcon className="h-8 w-8" />
-        </button>
+        <div className="fixed bottom-3 right-3 flex flex-col gap-3 z-50">
+          <button
+            onClick={openModal}
+            className="bg-vermelho hover:bg-vermelhoEscuro text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition"
+            title="Cadastrar Produto"
+          >
+            <PlusIcon className="h-8 w-8" />
+          </button>
+          <button
+            onClick={() => alert('Implementar importação CSV')}
+            className="bg-azulEscuro hover:bg-azulClaro text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition"
+            title="Importar CSV"
+          >
+            <ArrowDownOnSquareIcon className="h-8 w-8" />
+          </button>
+        </div>
       )}
 
-   {/* Botão flutuante de adicionar produto (somente ADMIN) */}
-{isAdmin() && (
-  <button
-    onClick={openModal}
-    className="fixed bottom-3 right-3 bg-vermelho hover:bg-vermelhoEscuro text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition z-50"
-    title="Cadastrar Produto"
-  >
-    <PlusIcon className="h-8 w-8" />
-  </button>
-)}
-
-{/* Modal de cadastro */}
-{modalOpen && (
-  <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-    <div
-      onAnimationEnd={handleAnimationEnd}
-      className={`relative bg-white text-preto rounded-xl shadow-2xl p-8 w-full max-w-lg transform transition-all ${
-        closing ? 'animate-fadeOutDown' : 'animate-fadeInUp'
-      }`}
-    >
-      {/* Botão de fechar */}
-      <button
-        onClick={closeModal}
-        className="absolute top-4 right-4 text-vermelho hover:text-vermelhoEscuro font-bold text-xl"
-      >
-        ×
-      </button>
-
-      <h2 className="text-2xl font-bold text-vermelho mb-6 text-center">
-        Registrar Produto
-      </h2>
-
-      {/* Formulário */}
-      <form className="space-y-4" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="nome"
-          value={form.nome}
-          onChange={handleChange}
-          placeholder="Nome do produto"
-          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-          required
-        />
-        <textarea
-          name="descricao"
-          value={form.descricao}
-          onChange={handleChange}
-          placeholder="Descrição do produto"
-          rows={3}
-          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-        />
-        <input
-          type="text"
-          name="categoria"
-          value={form.categoria}
-          onChange={handleChange}
-          placeholder="Categoria"
-          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-          required
-        />
-        <input
-          type="text"
-          name="prateleira"
-          value={form.prateleira}
-          onChange={handleChange}
-          placeholder="Prateleira"
-          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-        />
-        <input
-          type="text"
-          name="origem"
-          value={form.origem}
-          onChange={handleChange}
-          placeholder="Origem"
-          className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-        />
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <input
-            type="number"
-            name="quantidade"
-            value={form.quantidade}
-            onChange={handleChange}
-            placeholder="Quantidade"
-            min="0"
-            required
-            className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-          />
-          <input
-            type="number"
-            name="estoqueMinimo"
-            value={form.estoqueMinimo}
-            onChange={handleChange}
-            placeholder="Estoque mínimo"
-            min="0"
-            required
-            className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
-          />
-        </div>
-
-        <div className="flex items-center gap-3 pt-2">
-          <button
-            type="submit"
-            className="flex-1 bg-vermelho hover:bg-vermelhoEscuro text-white font-semibold py-2 rounded-md transition shadow-md"
+      {/* Modal de cadastro */}
+      {modalOpen && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+          <div
+            onAnimationEnd={handleAnimationEnd}
+            className={`relative bg-white text-preto rounded-xl shadow-2xl p-8 w-full max-w-lg transform transition-all ${
+              closing ? 'animate-fadeOutDown' : 'animate-fadeInUp'
+            }`}
           >
-            Salvar Produto
-          </button>
-          <button
-            type="button"
-            onClick={closeModal}
-            className="flex-1 bg-zinc-200 hover:bg-zinc-300 text-preto font-semibold py-2 rounded-md transition"
-          >
-            Cancelar
-          </button>
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-vermelho hover:text-vermelhoEscuro font-bold text-xl"
+            >
+              ×
+            </button>
+
+            <h2 className="text-2xl font-bold text-vermelho mb-6 text-center">
+              Registrar Produto
+            </h2>
+
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="nome"
+                value={form.nome}
+                onChange={handleChange}
+                placeholder="Nome do produto"
+                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+                required
+              />
+              <textarea
+                name="descricao"
+                value={form.descricao}
+                onChange={handleChange}
+                placeholder="Descrição do produto"
+                rows={3}
+                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+              />
+              <input
+                type="text"
+                name="categoria"
+                value={form.categoria}
+                onChange={handleChange}
+                placeholder="Categoria"
+                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+                required
+              />
+              <input
+                type="text"
+                name="prateleira"
+                value={form.prateleira}
+                onChange={handleChange}
+                placeholder="Prateleira"
+                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+              />
+              <input
+                type="text"
+                name="origem"
+                value={form.origem}
+                onChange={handleChange}
+                placeholder="Origem"
+                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+              />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input
+                  type="number"
+                  name="quantidade"
+                  value={form.quantidade}
+                  onChange={handleChange}
+                  placeholder="Quantidade"
+                  min="0"
+                  required
+                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+                />
+                <input
+                  type="number"
+                  name="estoqueMinimo"
+                  value={form.estoqueMinimo}
+                  onChange={handleChange}
+                  placeholder="Estoque mínimo"
+                  min="0"
+                  required
+                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-vermelho"
+                />
+              </div>
+
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="submit"
+                  className="flex-1 bg-vermelho hover:bg-vermelhoEscuro text-white font-semibold py-2 rounded-md transition shadow-md"
+                >
+                  Salvar Produto
+                </button>
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="flex-1 bg-zinc-200 hover:bg-zinc-300 text-preto font-semibold py-2 rounded-md transition"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
+      )}
+
+      <Footer />
     </div>
-  </div>
-)}
+  );
+}
